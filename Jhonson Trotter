@@ -1,0 +1,125 @@
+#include<stdio.h>
+#include<conio.h>
+
+int i;
+int  gme(int a[],int b[],int n) // greatest moving elememt
+{
+    int max=0;
+    int ctr=0;
+    for (i=n-1;i>=0;i--)
+    { 
+       if(b[i]==0)
+      {
+        if(i!=0)
+        {
+            if(a[i] > a[i-1]&&a[i]>max)
+                {
+                    max =a[i];
+                    ctr++;
+                    
+                }
+        }
+          
+      }
+
+      else
+      {
+        if(i!=n-1)
+        {
+            if(a[i]>a[i+1]&&a[i]>max)
+            {max =a[i];
+            ctr++;}
+        }
+      }
+  
+    }
+ 
+    for (i=0;i<n;i++)
+    {
+       if(a[i]==max)
+       {max=i;
+       break;
+       }
+    }
+  if(ctr!=0)
+    return max;
+ else
+    return (n+1);
+}
+
+void swap(int g, int a[], int b[], int n)
+{
+  int temp;
+
+  if(b[g]==0)
+  {
+    temp = a[g];
+    a[g] = a[g-1];
+    a[g-1]= temp;
+    
+    temp = b[g];
+    b[g] = b[g-1];
+    b[g-1]= temp;
+    g=g-1;
+    
+  } 
+
+  else
+  {
+    temp = a[g];
+    a[g] = a[g+1];
+    a[g+1]= temp;
+    
+    temp = b[g];
+    b[g] = b[g+1];
+    b[g+1]= temp;
+    g=g+1;
+  }
+ for(i=0;i<n;i++)
+  {
+    if(a[i]>a[g])
+    {
+        if(b[i]==0)
+        b[i]=1;
+        else
+        b[i]=0;
+    }
+  }
+}
+
+void main()
+{
+    int g;
+    int n;
+    
+    printf("Enter the value of n \n");
+    scanf("%d",&n);
+    
+    int a[n];
+    int b[n]; //0-left 1- right
+    
+    for (i=0;i<n;i++)
+     {
+        b[i]=0;
+        a[i]=i+1;
+     }
+    int ctr=0;
+    while(g!=n+1)
+    {
+        for(i=0;i<n;i++)
+        {
+            printf("%d ",a[i]);
+        }
+        printf("\n");
+        g= gme(a,b,n);
+        
+
+        if(g==n+1)
+          printf("Task Completed \n");
+        else
+         swap(g,a,b,n);
+        ctr++;
+         
+    }
+    printf("%d Permutations \n",ctr);
+}
