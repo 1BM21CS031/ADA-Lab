@@ -2,7 +2,6 @@
 #include<stdio.h>
 #include<conio.h>
 #include<math.h>
-#include<stdlib.h>
 
 int calc(int weight[],int profit[],int wt, int i, int j,int b[][wt])
 {
