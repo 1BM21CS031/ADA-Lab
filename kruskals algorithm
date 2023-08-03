@@ -1,0 +1,75 @@
+#include <stdio.h>
+int parent[10];
+int a[10][10];
+int n;
+int t[10][2];
+
+int find(int a)
+{
+    while(parent[a]!=a)
+        a=parent[a];
+    return a;
+}
+
+void unionn(int a,int b)
+{
+    if(a<b)
+        parent[b]=a;
+    else
+        parent[a]=b;
+}
+
+void kruskals(int cost[10][10])
+{
+    int count=0;
+    int k=0;
+    int u,v;
+    int i,j,sum=0;
+    while(count!=n-1)
+    {
+        int min=999;
+        for(int i=0;i<n;i++)
+            parent[i]=i;
+
+        for(int i=0;i<n;i++)
+            for(int j=0;j<n;j++)
+                if(cost[i][j]<min && cost[i][j]!=0)
+                {
+                    min=cost[i][j];
+                    u=i;
+                    v=j;
+                }
+                
+        i=find(u);
+        j=find(v);
+        if(i!=j)
+        {
+            t[k][0]=u;
+            t[k][1]=v;
+            k++;
+            count++;
+            sum+=cost[i][j];
+            unionn(i,j);
+        }
+        cost[u][v]=cost[v][u]=999;
+    }
+    printf("the minimal spannning tree is:\n");
+    for(int i=0;i<k;i++)
+        printf("%d->%d\n",t[i][0],t[i][1]);
+        
+    printf("optimal solution: %d",sum);
+}
+
+int main()
+{
+    printf("enter the number of vertices:\n");
+    scanf("%d",&n);
+    
+    printf("enter the cost matrix:\n");
+    for(int i=0;i<n;i++)
+        for(int j=0;j<n;j++)
+            scanf("%d",&a[i][j]);
+            
+    kruskals(a);
+return 0;
+}
